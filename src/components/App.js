@@ -24,11 +24,6 @@ const App = () => {
     setSelectedVideo(response.data.items[0]);  // 검색했을 때 디폴트로 첫번째 비디오 셋팅
   }
 
-  // VideoList -> VideoItem 까지 props 통해서 전달
-  const onVideoSelect = (video) => {
-    setSelectedVideo(video);
-  }
-
   return (
     <div className='ui container'>
       <SearchBar onFormSubmit={onTermSubmit} />
@@ -39,7 +34,7 @@ const App = () => {
           </div>
           <div className='five wide column'>
             <VideoList 
-              onVideoSelect={onVideoSelect}
+              onVideoSelect={(video) => setSelectedVideo(video)}
               videos={videos} 
             />
           </div>
