@@ -1,40 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-class SearchBar extends React.Component {
+const SearchBar = ({ onFormSubmit }) => {
+  const [term, setTerm] = useState('');
 
-  state = { term : '' }  // 입력한 검색어
-
-  // onclick 이벤트 리스너에 등록할 이벤트 핸들러
-  onInputChange = event => {
-    this.setState({ term : event.target.value });
+  // onChange 이벤트 리스너에 등록할 이벤트 핸들러
+  /*
+  const onInputChange = (event) => {
+    setTerm(event.target.value);
   }
+  */
 
-  onFormSubmit = event => {
+  // onSubmit 이벤트 리스너에 등록할 이벤트 핸들러
+  const onSubmit = (event) => {
     event.preventDefault();
-    
     // YouTube API 호출 & 콜백 정의
-    this.props.onFormSubmit(this.state.term);
-
+    onFormSubmit(term);
   }
 
-
-  render() {
-    return (
-      <div className='search-bar ui segment'>
-        <form onSubmit={this.onFormSubmit} className='ui form'>
-          <div className='field'>
-            <label>Video Search</label>
-            <input 
-              type="text" 
-              value={this.state.term} 
-              //onChange={e => this.setState({ term : e.target.value })}  // inline function
-              onChange={this.onInputChange}
-              />
-          </div>
-        </form>
-      </div>
-    )
-  }
-}
+  return (
+    <div className='search-bar ui segment'>
+      <form onSubmit={onSubmit} className='ui form'>
+        <div className='field'>
+          <label>Video Search</label>
+          <input 
+            type="text" 
+            value={term} 
+            onChange={event => setTerm(event.target.value)}  // inline function
+            //onChange={onInputChange}
+            />
+        </div>
+      </form>
+    </div>
+  );
+};
 
 export default SearchBar;
